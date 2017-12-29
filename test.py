@@ -1,5 +1,4 @@
 import siproll
+import sys
 
-roller = siproll.Roller()
-
-roller.call(8692)
+siproll.do_call("sip:"+ sys.argv[1] + "@voip.eventphone.de")
