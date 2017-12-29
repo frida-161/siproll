@@ -8,6 +8,7 @@ def do_call(uri, timeout):
             "--play-file", "/tmp/message.wav",
             uri]
     p = subprocess.Popen(pjsua, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
+    print "calling " + uri
 
     def terminate(p):
         if p.poll() == None:
@@ -17,7 +18,8 @@ def do_call(uri, timeout):
     t.start() 
 
     for line in iter(p.stdout.readline,''):
-        print line.rstrip()
         if "(PJ_EEOF)" in line.rsplit():
+            print "call hung up"
+            t.cancel()
             terminate(p)
         
